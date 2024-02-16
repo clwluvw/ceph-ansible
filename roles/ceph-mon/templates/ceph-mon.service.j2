@@ -53,7 +53,7 @@ ExecStart=/usr/bin/{{ container_binary }} run --rm --name ceph-mon-%i \
   -f \
   --default-mon-cluster-log-to-file=false --default-mon-cluster-log-to-stderr=true \
   -i {{ monitor_name }} --mon-data /var/lib/ceph/mon/{{ cluster }}-{{ monitor_name }} \
-  --public-addr {{ _current_monitor_address }} --mon-initial-members {{ groups[mon_group_name] | join(',') }}
+  --public-addr {{ _monitor_addresses[inventory_hostname] }} --mon-initial-members {{ groups[mon_group_name] | join(',') }}
 {% if container_binary == 'podman' %}
 ExecStop=-/usr/bin/sh -c "/usr/bin/{{ container_binary }} rm -f `cat /%t/%n-cid`"
 {% else %}
